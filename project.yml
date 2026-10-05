@@ -1,0 +1,81 @@
+name: SubZero
+deploymentTargets:
+  macOS: "13.0"
+
+options:
+  bundleIdPrefix: com.subzero
+  xcodeVersion: 15.0
+  createIntermediateGroups: true
+
+packages:
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    from: 11.0.0
+
+settings:
+  base:
+    ARCHS: "$(ARCHS_STANDARD)"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_HARDENED_RUNTIME: YES
+    SWIFT_VERSION: 5.9
+
+targets:
+  SubZeroHelper:
+    type: tool
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: SubZeroHelper
+      - path: SubZeroShared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.subzero.helper
+        PRODUCT_NAME: com.subzero.helper
+        INFOPLIST_FILE: SubZeroHelper/Info.plist
+        CODE_SIGN_ENTITLEMENTS: SubZeroHelper/SubZeroHelper.entitlements
+        SKIP_INSTALL: YES
+
+  SubZero:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: SubZero
+      - path: SubZeroShared
+    dependencies:
+      - target: SubZeroHelper
+      - package: Firebase
+        product: FirebaseCore
+      - package: Firebase
+        product: FirebaseFirestore
+      - package: Firebase
+        product: FirebaseAuth
+    postCompileScripts:
+      - name: Embed Privileged Helper Daemon
+        script: |
+          mkdir -p "${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchServices"
+          mkdir -p "${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchDaemons"
+          cp -f "${TARGET_BUILD_DIR}/com.subzero.helper" "${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchServices/com.subzero.helper"
+          cp -f "${PROJECT_DIR}/SubZeroHelper/com.subzero.helper.plist" "${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchDaemons/com.subzero.helper.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.subzero.app
+        PRODUCT_NAME: SubZero
+        INFOPLIST_FILE: SubZero/Info.plist
+        CODE_SIGN_ENTITLEMENTS: SubZero/SubZero.entitlements
+        LD_RUNPATH_SEARCH_PATHS: ["$(inherited)", "@executable_path/../Frameworks"]
+
+  SubZeroTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: SubZeroTests
+    dependencies:
+      - target: SubZero
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.subzero.app.tests
+        INFOPLIST_FILE: SubZeroTests/Info.plist
