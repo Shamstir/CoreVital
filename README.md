@@ -118,6 +118,16 @@ On Intel Macs, SMC fan writes are supported. On Apple Silicon, fan control is re
 
 ---
 
+## Cooling Stand (BLE)
+
+The agent owns a CoreBluetooth central link to the liquid-cooling laptop stand — an ESP32 peripheral advertising as **`SubZero Stand`** (Nordic UART Service). Pump + peltier always switch together.
+
+- **Manual**: ON/OFF from the agent's settings (Cooling Stand tab) or relayed from the phone app.
+- **Auto-pilot**: when enabled, cooling turns ON at `standCutoffTemp` (default 70 °C, max of CPU/GPU) and OFF at `cutoff − 5 °C` (hysteresis, no flapping). Works fully offline — temps are local.
+- **Heartbeat**: the ESP32 sends a `ST,<cooling>,<onForSec>,<rampReady>,<uptime>` frame every 5 s; if none arrives within 15 s the agent marks the stand disconnected and reconnects, resyncing the desired state on reconnection (the ESP32 failsafes cooling OFF on BLE disconnect).
+- **Firestore**: stand status is published to `devices/{deviceId}` (`standConnected`, `standRunning`, `standRampReady`, `standOnForSeconds`, `standMode`, …); phone commands (`standCommand` + `standCommandID`) and settings (`standAutoEnabled`, `standCutoffTemp`) follow the same relay pattern as external fan commands.
+- Firmware: see the `subzero` repo, `firmware/subzero_stand/`.
+
 ## Firestore Data Structure
 
 The agent writes to:
