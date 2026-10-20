@@ -35,6 +35,10 @@ public final class FirebaseManager: ObservableObject {
     private var commandListener: ListenerRegistration?
     private var externalFanCommandListener: ListenerRegistration?
     private var lastExternalFanCommandID: String?
+    private var standCommandListener: ListenerRegistration?
+    private var lastStandCommandID: String?
+    private var lastStandPublishAt: Date?
+    private var lastStandSignature: String = ""
     public let deviceId: String = {
         // Unique hardware UUID or device host name fallback
         if let uuid = getHardwareUUID() {
@@ -73,6 +77,7 @@ public final class FirebaseManager: ObservableObject {
             // access which a locally signed build cannot use.
             self.statusMessage = "Firestore telemetry connected."
             startListeningToRemoteCommands()
+            installStandStatusBridge()
         } catch {
             self.status = .error
             self.lastError = error.localizedDescription
@@ -250,6 +255,70 @@ public final class FirebaseManager: ObservableObject {
         }
     }
 
+    // MARK: - Cooling Stand Status (Mac is the ONLY writer of stand* fields)
+
+    /// Bridges StandManager state changes into Firestore without a circular
+    /// dependency: StandManager exposes `onStatusChanged`, FirebaseManager owns
+    /// the write path (state changes always write; pure heartbeat refreshes are
+    /// throttled to at most one write per ~5 s).
+    private func installStandStatusBridge() {
+        StandManager.shared.onStatusChanged = { [weak self] in
+            guard let self else { return }
+            let stand = StandManager.shared
+            self.publishStandStatus(
+                standConnected: stand.isHeartbeatFresh,
+                standRunning: stand.isCooling,
+                standRampReady: stand.rampReady,
+                standOnForSeconds: stand.onForSeconds,
+                standMode: stand.isAutoEnabled ? "auto" : "manual",
+                standAutoEnabled: stand.isAutoEnabled,
+                standCutoffTemp: stand.cutoffTemp,
+                standName: stand.standName ?? "SubZero Stand"
+            )
+        }
+    }
+
+    public func publishStandStatus(
+        standConnected: Bool,
+        standRunning: Bool,
+        standRampReady: Bool,
+        standOnForSeconds: Int,
+        standMode: String,
+        standAutoEnabled: Bool,
+        standCutoffTemp: Double,
+        standName: String
+    ) {
+        guard isConfigured, let db = db else { return }
+
+        let signature = "\(standConnected)|\(standRunning)|\(standRampReady)|\(standMode)|\(standAutoEnabled)|\(standCutoffTemp)|\(standOnForSeconds)"
+        if let last = lastStandPublishAt,
+           Date().timeIntervalSince(last) < 5.0,
+           signature == lastStandSignature {
+            return
+        }
+        lastStandPublishAt = Date()
+        lastStandSignature = signature
+
+        let payload: [String: Any] = [
+            "standConnected": standConnected,
+            "standRunning": standRunning,
+            "standRampReady": standRampReady,
+            "standOnForSeconds": standOnForSeconds,
+            "standMode": standMode,
+            "standAutoEnabled": standAutoEnabled,
+            "standCutoffTemp": standCutoffTemp,
+            "standName": standName,
+            "standLastHeartbeatAt": FieldValue.serverTimestamp(),
+            "standUpdatedAt": FieldValue.serverTimestamp()
+        ]
+
+        db.collection("devices").document(deviceId).setData(payload, merge: true) { error in
+            if let error = error {
+                print("[SubZero Firebase] ❌ Stand status publish error: \(error.localizedDescription)")
+            }
+        }
+    }
+
     // MARK: - Demo Trigger Alert to Phone
     public func triggerRemoteDemoAlert() {
         guard isConfigured, let db = db else {
@@ -323,6 +392,56 @@ public final class FirebaseManager: ObservableObject {
                     print("[SubZero External Fan] Received \(command). ESP bridge can now forward this state.")
                 }
             }
+
+        standCommandListener = db.collection("devices").document(deviceId)
+            .addSnapshotListener { [weak self] snapshot, error in
+                guard let self, error == nil, let data = snapshot?.data() else { return }
+                Task { @MainActor in
+                    self.handleStandDocumentUpdate(data)
+                }
+            }
+    }
+
+    /// Dedupe + dispatch for phone-initiated stand commands and settings,
+    /// following the externalFanCommandListener pattern (standCommandID key).
+    private func handleStandDocumentUpdate(_ data: [String: Any]) {
+        if let command = data["standCommand"] as? String,
+           let commandID = data["standCommandID"] as? String,
+           commandID != lastStandCommandID {
+            lastStandCommandID = commandID
+
+            switch command {
+            case "standOn":
+                print("[SubZero Stand] Received standOn from phone.")
+                StandManager.shared.sendManual(true)
+            case "standOff":
+                print("[SubZero Stand] Received standOff from phone.")
+                StandManager.shared.sendManual(false)
+            case "autoMode":
+                print("[SubZero Stand] Received autoMode from phone.")
+                StandManager.shared.setAuto(true)
+            case "manualMode":
+                print("[SubZero Stand] Received manualMode from phone.")
+                StandManager.shared.setAuto(false)
+            default:
+                break
+            }
+        }
+
+        // Settings: apply only when different from local (equality guard);
+        // applying never writes back — the next heartbeat refresh persists them.
+        let stand = StandManager.shared
+        if let auto = data["standAutoEnabled"] as? Bool,
+           auto != AppSettings.shared.standAutoEnabled {
+            print("[SubZero Stand] Applying remote standAutoEnabled=\(auto).")
+            stand.applyRemoteSettings(autoEnabled: auto, cutoff: AppSettings.shared.standCutoffTemp)
+        }
+        if let cutoff = (data["standCutoffTemp"] as? Double)
+                        ?? (data["standCutoffTemp"] as? Int).map(Double.init),
+           cutoff != AppSettings.shared.standCutoffTemp {
+            print("[SubZero Stand] Applying remote standCutoffTemp=\(cutoff).")
+            stand.applyRemoteSettings(autoEnabled: AppSettings.shared.standAutoEnabled, cutoff: cutoff)
+        }
     }
 
     // MARK: - Fan Curves Cloud Sync
