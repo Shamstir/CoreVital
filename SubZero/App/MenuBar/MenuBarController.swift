@@ -14,6 +14,7 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
     private var fanMenuItem: NSMenuItem!
     private var batteryMenuItem: NSMenuItem!
     private var netMenuItem: NSMenuItem!
+    private var standMenuItem: NSMenuItem!
     private var accountMenuItem: NSMenuItem!
     
     public var onOpenDashboard: (() -> Void)?
@@ -65,7 +66,12 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
         netMenuItem = NSMenuItem(title: "Network: --", action: #selector(openDashboardAction), keyEquivalent: "")
         netMenuItem.target = self
         menu.addItem(netMenuItem)
-        
+
+        standMenuItem = NSMenuItem(title: "Stand: --", action: #selector(openDashboardAction), keyEquivalent: "")
+        standMenuItem.target = self
+        standMenuItem.isHidden = true
+        menu.addItem(standMenuItem)
+
         menu.addItem(NSMenuItem.separator())
         
         let dashItem = NSMenuItem(title: "Open Dashboard...", action: #selector(openDashboardAction), keyEquivalent: "d")
@@ -115,7 +121,14 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
                 self?.updateMenuBarAndDropdown()
             }
             .store(in: &cancellables)
-            
+
+        StandManager.shared.objectWillChange
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateMenuBarAndDropdown()
+            }
+            .store(in: &cancellables)
+    
         // Initial update
         updateMenuBarAndDropdown()
     }
@@ -193,6 +206,18 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
         let downKB = sensors.networkStats.downloadBytesPerSec / 1024.0
         let upKB = sensors.networkStats.uploadBytesPerSec / 1024.0
         netMenuItem.title = String(format: "Network: ↓%.1f KB/s | ↑%.1f KB/s", downKB, upKB)
+
+        let stand = StandManager.shared
+        if stand.connectionState == .connected {
+            standMenuItem.isHidden = false
+            let cooling = stand.isCooling
+                ? (stand.rampReady ? "Cooling (optimal)" : String(format: "Cooling (optimal in %ds)", stand.secondsToOptimal))
+                : "Idle"
+            standMenuItem.title = "Stand: \(stand.isAutoEnabled ? "Auto" : "Manual") · \(cooling)"
+        } else {
+            standMenuItem.isHidden = stand.connectionState != .scanning && stand.connectionState != .connecting
+            standMenuItem.title = "Stand: \(stand.connectionState.rawValue)..."
+        }
 
         if let email = FirebaseManager.shared.currentUserEmail {
             accountMenuItem.title = "Account: \(email) (Linked)"

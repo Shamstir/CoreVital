@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // because local macOS signing cannot access its Keychain credentials.
         FirebaseManager.shared.configure()
         _ = SensorManager.shared
+        StandManager.shared.start()
         
         let controller = MenuBarController()
         controller.onOpenDashboard = { [weak self] in

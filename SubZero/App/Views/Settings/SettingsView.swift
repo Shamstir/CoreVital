@@ -19,7 +19,12 @@ struct SettingsView: View {
                 .tabItem {
                     Label("Cooling & Fans", systemImage: "fanblades.fill")
                 }
-            
+
+            standSettingsTab
+                .tabItem {
+                    Label("Cooling Stand", systemImage: "snowflake")
+                }
+
             CloudSyncSettingsView()
                 .tabItem {
                     Label("Cloud Sync", systemImage: "icloud.and.arrow.up")
@@ -62,6 +67,10 @@ struct SettingsView: View {
         .padding()
     }
     
+    private var standSettingsTab: some View {
+        StandSettingsView()
+    }
+
     private var menuBarSettingsTab: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Select up to 4 metrics to display live directly in the macOS menu bar:")
@@ -106,5 +115,103 @@ struct SettingsView: View {
                 .foregroundColor(.secondary)
         }
         .padding()
+    }
+}
+
+struct StandSettingsView: View {
+    @ObservedObject var stand = StandManager.shared
+
+    var body: some View {
+        Form {
+            Section {
+                HStack {
+                    Text("Connection:")
+                    Spacer()
+                    Circle()
+                        .fill(connectionColor)
+                        .frame(width: 10, height: 10)
+                    Text(connectionText)
+                        .foregroundColor(.secondary)
+                }
+
+                if stand.connectionState == .connected {
+                    HStack {
+                        Text("Status:")
+                        Spacer()
+                        Text(runningText)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+
+            Section {
+                HStack {
+                    Button("Cooling ON") {
+                        StandManager.shared.sendManual(true)
+                    }
+                    .disabled(!isConnected)
+
+                    Button("Cooling OFF") {
+                        StandManager.shared.sendManual(false)
+                    }
+                    .disabled(!isConnected)
+                }
+
+                Toggle("Auto-Pilot (cool automatically above cutoff)", isOn: Binding(
+                    get: { stand.isAutoEnabled },
+                    set: { StandManager.shared.setAuto($0) }
+                ))
+
+                HStack {
+                    Text("Cutoff:")
+                    Slider(
+                        value: Binding(
+                            get: { stand.cutoffTemp },
+                            set: { StandManager.shared.setCutoff($0) }
+                        ),
+                        in: 55...90,
+                        step: 1
+                    )
+                    Text(String(format: "%.0f °C", stand.cutoffTemp))
+                        .monospacedDigit()
+                        .frame(width: 56, alignment: .trailing)
+                }
+
+                Text("In auto-pilot mode the stand cools when the hottest sensor reaches the cutoff and stops once it falls 5 °C below it.")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding()
+    }
+
+    private var isConnected: Bool {
+        stand.connectionState == .connected
+    }
+
+    private var connectionColor: Color {
+        switch stand.connectionState {
+        case .connected: return stand.isHeartbeatFresh ? .green : .orange
+        case .scanning, .connecting: return .orange
+        case .disconnected: return .gray
+        }
+    }
+
+    private var connectionText: String {
+        switch stand.connectionState {
+        case .disconnected: return "Disconnected"
+        case .scanning: return "Scanning..."
+        case .connecting: return "Connecting..."
+        case .connected: return stand.isHeartbeatFresh ? "Connected" : "Connected (stale link)"
+        }
+    }
+
+    private var runningText: String {
+        if stand.isCooling {
+            return stand.rampReady
+                ? "Cooling (optimal temperature)"
+                : String(format: "Cooling (optimal in %ds)", stand.secondsToOptimal)
+        }
+        return "Idle"
     }
 }
