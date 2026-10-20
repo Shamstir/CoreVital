@@ -93,6 +93,18 @@ public final class AppSettings: ObservableObject {
             updateLaunchAtLogin()
         }
     }
+
+    @AppStorage("standAutoEnabled") public var standAutoEnabled: Bool = false {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+
+    @AppStorage("standCutoffTemp") public var standCutoffTemp: Double = 70.0 {
+        didSet {
+            objectWillChange.send()
+        }
+    }
     
     private init() {
         // Sync launch at login status from OS on start
