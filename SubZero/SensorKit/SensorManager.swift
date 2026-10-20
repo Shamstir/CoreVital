@@ -94,7 +94,7 @@ public final class SensorManager: ObservableObject {
             gpuTemp: gpuTemp,
             fanRPM: fanSpeeds.first?.currentRPM,
             memoryPressure: memoryStats.pressurePercentage,
-            batteryPct: batteryInfo.chargePercentage,
+            batteryPct: batteryInfo.chargePercentage ?? 0,
             packageWatts: powerReadings?.totalPackageWatts,
             diskRead: diskIO.readBytesPerSec,
             diskWrite: diskIO.writeBytesPerSec,
@@ -102,7 +102,8 @@ public final class SensorManager: ObservableObject {
             netTx: networkStats.uploadBytesPerSec
         )
         
-        // Broadcast live telemetry to Firebase Cloud for Android companion
+        let maxTemp = max(cpuTemp ?? 0, gpuTemp ?? 0)
+        let threshold = FirebaseManager.shared.thermalAlertThreshold
         FirebaseManager.shared.publishLiveTelemetry(
             cpuTemp: cpuTemp,
             gpuTemp: gpuTemp,
@@ -113,6 +114,19 @@ public final class SensorManager: ObservableObject {
             powerReadings: powerReadings,
             thermalState: thermalState,
             chipName: chipName
+        )
+        PairingManager.shared.publishThermalEvent(
+            maxTemp: maxTemp,
+            alertTriggered: maxTemp >= threshold,
+            message: String(format: "High thermal alert: %.1f°C exceeds %.0f°C limit.", maxTemp, threshold),
+            cpuTemp: cpuTemp,
+            gpuTemp: gpuTemp,
+            cpuLoad: cpuLoad.totalLoad,
+            batteryPct: batteryInfo.chargePercentage ?? 0,
+            isCharging: batteryInfo.isCharging,
+            packageWatts: powerReadings?.totalPackageWatts,
+            thermalState: String(describing: thermalState),
+            alertThreshold: threshold
         )
     }
 }

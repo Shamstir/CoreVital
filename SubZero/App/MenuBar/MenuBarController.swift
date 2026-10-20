@@ -14,6 +14,7 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
     private var fanMenuItem: NSMenuItem!
     private var batteryMenuItem: NSMenuItem!
     private var netMenuItem: NSMenuItem!
+    private var accountMenuItem: NSMenuItem!
     
     public var onOpenDashboard: (() -> Void)?
     public var onOpenSettings: (() -> Void)?
@@ -35,6 +36,10 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
             .foregroundColor: NSColor.labelColor
         ])
         menu.addItem(headerItem)
+
+        accountMenuItem = NSMenuItem(title: "Account: Connecting...", action: #selector(openSettingsAction), keyEquivalent: "")
+        accountMenuItem.target = self
+        menu.addItem(accountMenuItem)
         menu.addItem(NSMenuItem.separator())
         
         cpuMenuItem = NSMenuItem(title: "CPU: --", action: #selector(openDashboardAction), keyEquivalent: "")
@@ -85,7 +90,7 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
     }
     
     @objc private func triggerPhoneAlertAction() {
-        FirebaseManager.shared.triggerRemoteDemoAlert()
+        PairingManager.shared.triggerTestAlert()
     }
     
     private func bindData() {
@@ -98,6 +103,13 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
             .store(in: &cancellables)
             
         AppSettings.shared.objectWillChange
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateMenuBarAndDropdown()
+            }
+            .store(in: &cancellables)
+
+        FirebaseManager.shared.objectWillChange
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateMenuBarAndDropdown()
@@ -181,6 +193,14 @@ public final class MenuBarController: NSObject, NSMenuDelegate {
         let downKB = sensors.networkStats.downloadBytesPerSec / 1024.0
         let upKB = sensors.networkStats.uploadBytesPerSec / 1024.0
         netMenuItem.title = String(format: "Network: ↓%.1f KB/s | ↑%.1f KB/s", downKB, upKB)
+
+        if let email = FirebaseManager.shared.currentUserEmail {
+            accountMenuItem.title = "Account: \(email) (Linked)"
+        } else if FirebaseManager.shared.isConfigured {
+            accountMenuItem.title = "Account: Guest (Click to Link...)"
+        } else {
+            accountMenuItem.title = "Account: Not Configured"
+        }
     }
     
     @objc private func openDashboardAction() {

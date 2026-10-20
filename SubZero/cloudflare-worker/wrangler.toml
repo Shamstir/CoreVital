@@ -1,0 +1,11 @@
+name = "subzero-fcm"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "PAIRINGS"
+id = "43f393d300fa414098d4b3a531a05490"
+
+# Set these after deployment; never commit their values:
+# wrangler secret put FIREBASE_SERVICE_ACCOUNT_JSON
+# wrangler secret put FIREBASE_PROJECT_ID

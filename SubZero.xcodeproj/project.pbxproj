@@ -1,0 +1,828 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0C905FCBA5E5628CC2893F10 /* SubZeroHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831734A932B95BF2C8785C3 /* SubZeroHelperProtocol.swift */; };
+		15067CC9A5156C551470CB0C /* SensorKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0E853FEDBA53393DE4F9D /* SensorKitTests.swift */; };
+		172EF8E78A2DD414B20034BF /* SubZeroHelper in Resources */ = {isa = PBXBuildFile; fileRef = 6D5BB02141AD37E25CD35DD1 /* SubZeroHelper */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		181570A4F4B92712B33D97FF /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5FCC21C15D455D0E5FF0F9A3 /* FirebaseCore */; };
+		1D16922B643094FA201A87EF /* AppleSiliconSensorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E0437B0A188E7F42CC924C /* AppleSiliconSensorProvider.swift */; };
+		2306B3BAAC165224332E37D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71506661158FDD914DC37F7F /* GoogleService-Info.plist */; };
+		2B21D2619F69B87D2CED766F /* SubZeroHelperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32DF5E8AD4445A94CEC34E6 /* SubZeroHelperService.swift */; };
+		2B2C50D025F629CBCDBF78C5 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2405372E16639025F314F0 /* DashboardViewModel.swift */; };
+		2B66D8412C593C39F5825825 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0D0815A15853C025063FC9 /* main.swift */; };
+		38510D9E4BEBD4BE474997BF /* SensorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF1F39D6A9EC5AF218E19EB /* SensorModels.swift */; };
+		392B9A1648A74AC049841BF7 /* IOReportHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079BE5D481F671E53DD42408 /* IOReportHelper.swift */; };
+		44C4E12B9F590FBEDB878A9F /* SensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB54919FB5226899E52E30DB /* SensorManager.swift */; };
+		465385174C63E220F0A3AA3B /* SMCWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B22DDEEF4B4175BF313F0 /* SMCWriter.swift */; };
+		4CA5A3CAFBEECC1A4FB1B4E4 /* SubZeroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9278F80A62D577C072C75272 /* SubZeroApp.swift */; };
+		5B5C28CFA0FE97CEC82232F6 /* SystemMetricsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037CB4B83F3EC4ACE718D7ED /* SystemMetricsHelper.swift */; };
+		75983477657A4BD03E47EB69 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 65A4E92344FCCF15E1022C67 /* FirebaseAuth */; };
+		781AAA3D149AD5E2AE5B14DE /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA8F86E710D915C76E37A77 /* FirebaseManager.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* PairingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* PairingManager.swift */; };
+		7AA2C5709A0B52E1496083CD /* SubZeroHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831734A932B95BF2C8785C3 /* SubZeroHelperProtocol.swift */; };
+		7FF59FD0AE490E85A8F8399E /* SMCWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B22DDEEF4B4175BF313F0 /* SMCWriter.swift */; };
+		858928E5EF02E3D8280B5EE8 /* FanControlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04037A22209BD5EE6FB742A4 /* FanControlManager.swift */; };
+		88BDF6AACFE76DF1E3B3B9D3 /* MetricChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEADE1260764A4CBDA7AAFCE /* MetricChartView.swift */; };
+		8EDA41F1544EC62CC3B52203 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C00D1C82DA11AA1FA5BBD9 /* SettingsView.swift */; };
+		8F60C69087713263AF197382 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719D2F36D85B727D397F53BA /* DashboardView.swift */; };
+		90724BA7047AE8B0CFA05CB4 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D598FD14A49AE8C3AAA1E74 /* MenuBarController.swift */; };
+		AB9700C98E8777A2B4F42F95 /* HelperListenerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CA598909E28EBD147D3E0D /* HelperListenerDelegate.swift */; };
+		C5161B9AE839408F70AC6BC1 /* FanCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F6C951F2B97DF693167E44 /* FanCurve.swift */; };
+		CD3AA498B0A50843E3A6867B /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2CFFC583242592A09763CC /* AppSettings.swift */; };
+		DBFC25C2370A19BAE07F9981 /* FanCurveSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C44F236E8467DEF4F974F /* FanCurveSettingsView.swift */; };
+		F3ABF1CACF25A2E7C1A267E0 /* CloudSyncSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77C37A679A31ECBABF293DD /* CloudSyncSettingsView.swift */; };
+		F3D5F532815B48546327FCEB /* SMCConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBC7C4CAAAF243236D07E36 /* SMCConnection.swift */; };
+		F4383D04648E09F3FC79A566 /* SensorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A991FA8813354ECFECBE371 /* SensorProvider.swift */; };
+		F558C76BB7110427F8449ECE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 42CE9F853274986DD869925E /* FirebaseFirestore */; };
+		F7392E4C192550D592FDBC52 /* HIDSensorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6F2ABF83E4C89D640E7261 /* HIDSensorHelper.swift */; };
+		FCE28C70F3DFA8F00C2C421A /* IntelSensorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E2BD586D8EBDF607B6024D /* IntelSensorProvider.swift */; };
+		FD567B9BA9E4352BB896002C /* com.subzero.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA8A15B9495B5258C797B544 /* com.subzero.helper.plist */; };
+		FEB9D6230E1A8ABAB32DB3A2 /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC996070E3D7078E59C7E4F /* HistoryStore.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F5F250FA3869FBEDDC40164C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C295DC6A28DDD12C2A5801E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22B93C241D2A199ADD47640E;
+			remoteInfo = SubZeroHelper;
+		};
+		FF4F3939B38717362F015C79 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C295DC6A28DDD12C2A5801E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC15CE98D2CE87704116029B;
+			remoteInfo = SubZero;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		037CB4B83F3EC4ACE718D7ED /* SystemMetricsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMetricsHelper.swift; sourceTree = "<group>"; };
+		04037A22209BD5EE6FB742A4 /* FanControlManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanControlManager.swift; sourceTree = "<group>"; };
+		079BE5D481F671E53DD42408 /* IOReportHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOReportHelper.swift; sourceTree = "<group>"; };
+		09CA598909E28EBD147D3E0D /* HelperListenerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperListenerDelegate.swift; sourceTree = "<group>"; };
+		0D598FD14A49AE8C3AAA1E74 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
+		1462CD2B84FFCB5D49B7135F /* SubZero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubZero.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		154B22DDEEF4B4175BF313F0 /* SMCWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCWriter.swift; sourceTree = "<group>"; };
+		1C2405372E16639025F314F0 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		1FA0E853FEDBA53393DE4F9D /* SensorKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorKitTests.swift; sourceTree = "<group>"; };
+		2831734A932B95BF2C8785C3 /* SubZeroHelperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubZeroHelperProtocol.swift; sourceTree = "<group>"; };
+		2B2CFFC583242592A09763CC /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		3C6F2ABF83E4C89D640E7261 /* HIDSensorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDSensorHelper.swift; sourceTree = "<group>"; };
+		4E905626998BD3A8C70DB118 /* SubZero.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubZero.entitlements; sourceTree = "<group>"; };
+		50C00D1C82DA11AA1FA5BBD9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		5A991FA8813354ECFECBE371 /* SensorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorProvider.swift; sourceTree = "<group>"; };
+		5BA8F86E710D915C76E37A77 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5D /* PairingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingManager.swift; sourceTree = "<group>"; };
+		5CF1F39D6A9EC5AF218E19EB /* SensorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorModels.swift; sourceTree = "<group>"; };
+		633C44F236E8467DEF4F974F /* FanCurveSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanCurveSettingsView.swift; sourceTree = "<group>"; };
+		6D5BB02141AD37E25CD35DD1 /* SubZeroHelper */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; name = SubZeroHelper; path = com.subzero.helper; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F39491AF3631E3A9B20BC61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		713B67DAE23AA04F1B7F582B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		71506661158FDD914DC37F7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		719D2F36D85B727D397F53BA /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		74E2BD586D8EBDF607B6024D /* IntelSensorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntelSensorProvider.swift; sourceTree = "<group>"; };
+		7DC2D1FFA2475D16B59BFE9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7F0D0815A15853C025063FC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		8A901F5DD3CE91C50EB5DB36 /* SubZeroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SubZeroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9278F80A62D577C072C75272 /* SubZeroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubZeroApp.swift; sourceTree = "<group>"; };
+		9FBC7C4CAAAF243236D07E36 /* SMCConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCConnection.swift; sourceTree = "<group>"; };
+		AEADE1260764A4CBDA7AAFCE /* MetricChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricChartView.swift; sourceTree = "<group>"; };
+		BCC996070E3D7078E59C7E4F /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
+		C0E0437B0A188E7F42CC924C /* AppleSiliconSensorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSiliconSensorProvider.swift; sourceTree = "<group>"; };
+		C218292A11185FDA85A47001 /* SubZeroHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SubZeroHelper.entitlements; sourceTree = "<group>"; };
+		CB54919FB5226899E52E30DB /* SensorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorManager.swift; sourceTree = "<group>"; };
+		D77C37A679A31ECBABF293DD /* CloudSyncSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncSettingsView.swift; sourceTree = "<group>"; };
+		D7F6C951F2B97DF693167E44 /* FanCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanCurve.swift; sourceTree = "<group>"; };
+		DA8A15B9495B5258C797B544 /* com.subzero.helper.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = com.subzero.helper.plist; sourceTree = "<group>"; };
+		E32DF5E8AD4445A94CEC34E6 /* SubZeroHelperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubZeroHelperService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		28FDCC746141395D0FEB888B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				181570A4F4B92712B33D97FF /* FirebaseCore in Frameworks */,
+				F558C76BB7110427F8449ECE /* FirebaseFirestore in Frameworks */,
+				75983477657A4BD03E47EB69 /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		03C6C7C94D2751146A5560E7 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				719D2F36D85B727D397F53BA /* DashboardView.swift */,
+				AEADE1260764A4CBDA7AAFCE /* MetricChartView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		11AB52A40E3725CDDB8C5AE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1462CD2B84FFCB5D49B7135F /* SubZero.app */,
+				6D5BB02141AD37E25CD35DD1 /* SubZeroHelper */,
+				8A901F5DD3CE91C50EB5DB36 /* SubZeroTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		48882D7398F888E06BA9FC81 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1C2405372E16639025F314F0 /* DashboardViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4CBBBD07A545DD9BF68D100A /* FanControl */ = {
+			isa = PBXGroup;
+			children = (
+				04037A22209BD5EE6FB742A4 /* FanControlManager.swift */,
+				D7F6C951F2B97DF693167E44 /* FanCurve.swift */,
+			);
+			path = FanControl;
+			sourceTree = "<group>";
+		};
+		52E6D6C4022667F4D9AE87FA /* SubZeroHelper */ = {
+			isa = PBXGroup;
+			children = (
+				DA8A15B9495B5258C797B544 /* com.subzero.helper.plist */,
+				09CA598909E28EBD147D3E0D /* HelperListenerDelegate.swift */,
+				7DC2D1FFA2475D16B59BFE9E /* Info.plist */,
+				7F0D0815A15853C025063FC9 /* main.swift */,
+				C218292A11185FDA85A47001 /* SubZeroHelper.entitlements */,
+				E32DF5E8AD4445A94CEC34E6 /* SubZeroHelperService.swift */,
+			);
+			path = SubZeroHelper;
+			sourceTree = "<group>";
+		};
+		6305577319F43B4DDC953EDF /* SubZero */ = {
+			isa = PBXGroup;
+			children = (
+				71506661158FDD914DC37F7F /* GoogleService-Info.plist */,
+				713B67DAE23AA04F1B7F582B /* Info.plist */,
+				4E905626998BD3A8C70DB118 /* SubZero.entitlements */,
+				D25D7A3C09BD6BD366F91B45 /* App */,
+				4CBBBD07A545DD9BF68D100A /* FanControl */,
+				EE3DE85F046D3CCBC77471ED /* SensorKit */,
+				E87CF2D36FB384CF3FC05A0A /* Storage */,
+			);
+			path = SubZero;
+			sourceTree = "<group>";
+		};
+		64DFDA50A8239D38A66FFF27 = {
+			isa = PBXGroup;
+			children = (
+				6305577319F43B4DDC953EDF /* SubZero */,
+				52E6D6C4022667F4D9AE87FA /* SubZeroHelper */,
+				A0FBD1D57FA4E191FBC7687E /* SubZeroShared */,
+				EA3D2128DE745FE26D2D0BC6 /* SubZeroTests */,
+				11AB52A40E3725CDDB8C5AE1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6DD726992A830D0F04FD7C02 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5CF1F39D6A9EC5AF218E19EB /* SensorModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8F39BA5E810F653ADB77565D /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				0D598FD14A49AE8C3AAA1E74 /* MenuBarController.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		8FFF75C506D48A0DA4CE4DE9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D77C37A679A31ECBABF293DD /* CloudSyncSettingsView.swift */,
+				633C44F236E8467DEF4F974F /* FanCurveSettingsView.swift */,
+				50C00D1C82DA11AA1FA5BBD9 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A0FBD1D57FA4E191FBC7687E /* SubZeroShared */ = {
+			isa = PBXGroup;
+			children = (
+				154B22DDEEF4B4175BF313F0 /* SMCWriter.swift */,
+				2831734A932B95BF2C8785C3 /* SubZeroHelperProtocol.swift */,
+			);
+			path = SubZeroShared;
+			sourceTree = "<group>";
+		};
+		B01EA99AE60880745880C55F /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				5A991FA8813354ECFECBE371 /* SensorProvider.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D25D7A3C09BD6BD366F91B45 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9278F80A62D577C072C75272 /* SubZeroApp.swift */,
+				8F39BA5E810F653ADB77565D /* MenuBar */,
+				48882D7398F888E06BA9FC81 /* ViewModels */,
+				ED3C82D4672D4ABAEBB81152 /* Views */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E87CF2D36FB384CF3FC05A0A /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				2B2CFFC583242592A09763CC /* AppSettings.swift */,
+				5BA8F86E710D915C76E37A77 /* FirebaseManager.swift */,
+				A1B2C3D4E5F60718293A4B5D /* PairingManager.swift */,
+				BCC996070E3D7078E59C7E4F /* HistoryStore.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		EA3D2128DE745FE26D2D0BC6 /* SubZeroTests */ = {
+			isa = PBXGroup;
+			children = (
+				6F39491AF3631E3A9B20BC61 /* Info.plist */,
+				1FA0E853FEDBA53393DE4F9D /* SensorKitTests.swift */,
+			);
+			path = SubZeroTests;
+			sourceTree = "<group>";
+		};
+		ED3C82D4672D4ABAEBB81152 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				03C6C7C94D2751146A5560E7 /* Dashboard */,
+				8FFF75C506D48A0DA4CE4DE9 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EE3DE85F046D3CCBC77471ED /* SensorKit */ = {
+			isa = PBXGroup;
+			children = (
+				CB54919FB5226899E52E30DB /* SensorManager.swift */,
+				6DD726992A830D0F04FD7C02 /* Models */,
+				B01EA99AE60880745880C55F /* Protocol */,
+				F0DF414DB2756F58FA291B61 /* Providers */,
+			);
+			path = SensorKit;
+			sourceTree = "<group>";
+		};
+		F0DF414DB2756F58FA291B61 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				C0E0437B0A188E7F42CC924C /* AppleSiliconSensorProvider.swift */,
+				3C6F2ABF83E4C89D640E7261 /* HIDSensorHelper.swift */,
+				74E2BD586D8EBDF607B6024D /* IntelSensorProvider.swift */,
+				079BE5D481F671E53DD42408 /* IOReportHelper.swift */,
+				9FBC7C4CAAAF243236D07E36 /* SMCConnection.swift */,
+				037CB4B83F3EC4ACE718D7ED /* SystemMetricsHelper.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		22B93C241D2A199ADD47640E /* SubZeroHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1698A6FA34890067E81BA3B5 /* Build configuration list for PBXNativeTarget "SubZeroHelper" */;
+			buildPhases = (
+				5D6B815227AB63120550AA72 /* Sources */,
+				2EB2147F6682DACBD13CF352 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SubZeroHelper;
+			packageProductDependencies = (
+			);
+			productName = SubZeroHelper;
+			productReference = 6D5BB02141AD37E25CD35DD1 /* SubZeroHelper */;
+			productType = "com.apple.product-type.tool";
+		};
+		5E1936B862E592D347F39BA5 /* SubZeroTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1576FADE8E708E1F2652F136 /* Build configuration list for PBXNativeTarget "SubZeroTests" */;
+			buildPhases = (
+				80AA5D7119D7FBAB24145DBC /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				954FA67C76F0D602B85F6E5C /* PBXTargetDependency */,
+			);
+			name = SubZeroTests;
+			packageProductDependencies = (
+			);
+			productName = SubZeroTests;
+			productReference = 8A901F5DD3CE91C50EB5DB36 /* SubZeroTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BC15CE98D2CE87704116029B /* SubZero */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D39F394A1D3A1304C182270B /* Build configuration list for PBXNativeTarget "SubZero" */;
+			buildPhases = (
+				E079577D0F330F5B4422F556 /* Sources */,
+				8F31503FCBC93C54A6818DD7 /* Embed Privileged Helper Daemon */,
+				AE2384965F9FDA4A5EA68676 /* Resources */,
+				28FDCC746141395D0FEB888B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EAB78359BBCAC5DF315D0832 /* PBXTargetDependency */,
+			);
+			name = SubZero;
+			packageProductDependencies = (
+				5FCC21C15D455D0E5FF0F9A3 /* FirebaseCore */,
+				42CE9F853274986DD869925E /* FirebaseFirestore */,
+				65A4E92344FCCF15E1022C67 /* FirebaseAuth */,
+			);
+			productName = SubZero;
+			productReference = 1462CD2B84FFCB5D49B7135F /* SubZero.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C295DC6A28DDD12C2A5801E2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					22B93C241D2A199ADD47640E = {
+						ProvisioningStyle = Automatic;
+					};
+					5E1936B862E592D347F39BA5 = {
+						ProvisioningStyle = Automatic;
+					};
+					BC15CE98D2CE87704116029B = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 053F098F54EFC8975C255617 /* Build configuration list for PBXProject "SubZero" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 64DFDA50A8239D38A66FFF27;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9B45444249A9E744D7CBFDDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 11AB52A40E3725CDDB8C5AE1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BC15CE98D2CE87704116029B /* SubZero */,
+				22B93C241D2A199ADD47640E /* SubZeroHelper */,
+				5E1936B862E592D347F39BA5 /* SubZeroTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2EB2147F6682DACBD13CF352 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD567B9BA9E4352BB896002C /* com.subzero.helper.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE2384965F9FDA4A5EA68676 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2306B3BAAC165224332E37D7 /* GoogleService-Info.plist in Resources */,
+				172EF8E78A2DD414B20034BF /* SubZeroHelper in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8F31503FCBC93C54A6818DD7 /* Embed Privileged Helper Daemon */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Privileged Helper Daemon";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchServices\"\nmkdir -p \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchDaemons\"\ncp -f \"${TARGET_BUILD_DIR}/com.subzero.helper\" \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchServices/com.subzero.helper\"\ncp -f \"${PROJECT_DIR}/SubZeroHelper/com.subzero.helper.plist\" \"${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Library/LaunchDaemons/com.subzero.helper.plist\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5D6B815227AB63120550AA72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB9700C98E8777A2B4F42F95 /* HelperListenerDelegate.swift in Sources */,
+				465385174C63E220F0A3AA3B /* SMCWriter.swift in Sources */,
+				0C905FCBA5E5628CC2893F10 /* SubZeroHelperProtocol.swift in Sources */,
+				2B21D2619F69B87D2CED766F /* SubZeroHelperService.swift in Sources */,
+				2B66D8412C593C39F5825825 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80AA5D7119D7FBAB24145DBC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15067CC9A5156C551470CB0C /* SensorKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E079577D0F330F5B4422F556 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD3AA498B0A50843E3A6867B /* AppSettings.swift in Sources */,
+				1D16922B643094FA201A87EF /* AppleSiliconSensorProvider.swift in Sources */,
+				F3ABF1CACF25A2E7C1A267E0 /* CloudSyncSettingsView.swift in Sources */,
+				8F60C69087713263AF197382 /* DashboardView.swift in Sources */,
+				2B2C50D025F629CBCDBF78C5 /* DashboardViewModel.swift in Sources */,
+				858928E5EF02E3D8280B5EE8 /* FanControlManager.swift in Sources */,
+				C5161B9AE839408F70AC6BC1 /* FanCurve.swift in Sources */,
+				DBFC25C2370A19BAE07F9981 /* FanCurveSettingsView.swift in Sources */,
+				781AAA3D149AD5E2AE5B14DE /* FirebaseManager.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* PairingManager.swift in Sources */,
+				F7392E4C192550D592FDBC52 /* HIDSensorHelper.swift in Sources */,
+				FEB9D6230E1A8ABAB32DB3A2 /* HistoryStore.swift in Sources */,
+				392B9A1648A74AC049841BF7 /* IOReportHelper.swift in Sources */,
+				FCE28C70F3DFA8F00C2C421A /* IntelSensorProvider.swift in Sources */,
+				90724BA7047AE8B0CFA05CB4 /* MenuBarController.swift in Sources */,
+				88BDF6AACFE76DF1E3B3B9D3 /* MetricChartView.swift in Sources */,
+				F3D5F532815B48546327FCEB /* SMCConnection.swift in Sources */,
+				7FF59FD0AE490E85A8F8399E /* SMCWriter.swift in Sources */,
+				44C4E12B9F590FBEDB878A9F /* SensorManager.swift in Sources */,
+				38510D9E4BEBD4BE474997BF /* SensorModels.swift in Sources */,
+				F4383D04648E09F3FC79A566 /* SensorProvider.swift in Sources */,
+				8EDA41F1544EC62CC3B52203 /* SettingsView.swift in Sources */,
+				4CA5A3CAFBEECC1A4FB1B4E4 /* SubZeroApp.swift in Sources */,
+				7AA2C5709A0B52E1496083CD /* SubZeroHelperProtocol.swift in Sources */,
+				5B5C28CFA0FE97CEC82232F6 /* SystemMetricsHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		954FA67C76F0D602B85F6E5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC15CE98D2CE87704116029B /* SubZero */;
+			targetProxy = FF4F3939B38717362F015C79 /* PBXContainerItemProxy */;
+		};
+		EAB78359BBCAC5DF315D0832 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22B93C241D2A199ADD47640E /* SubZeroHelper */;
+			targetProxy = F5F250FA3869FBEDDC40164C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		28E52315B60C98404ECA7155 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SubZero/SubZero.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5874JJPZL2;
+				INFOPLIST_FILE = SubZero/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.subzero.app;
+				PRODUCT_NAME = SubZero;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		52A52C78D7FEE1A5A943D6EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SubZeroTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.subzero.app.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SubZero.app/Contents/MacOS/SubZero";
+			};
+			name = Debug;
+		};
+		872BEDECCF30AC233FA1107C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SubZeroHelper/SubZeroHelper.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SubZeroHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.subzero.helper;
+				PRODUCT_NAME = com.subzero.helper;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		87C954956096F29864E4F994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		8BAB160D080504C1623A0A5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SubZeroTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.subzero.app.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SubZero.app/Contents/MacOS/SubZero";
+			};
+			name = Release;
+		};
+		C859ADFE4326A541427BD6E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SubZeroHelper/SubZeroHelper.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SubZeroHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.subzero.helper;
+				PRODUCT_NAME = com.subzero.helper;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D7E8329694FB45369C942BE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SubZero/SubZero.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5874JJPZL2;
+				INFOPLIST_FILE = SubZero/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.subzero.app;
+				PRODUCT_NAME = SubZero;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E47ACD321FE856EA54182F03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		053F098F54EFC8975C255617 /* Build configuration list for PBXProject "SubZero" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87C954956096F29864E4F994 /* Debug */,
+				E47ACD321FE856EA54182F03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1576FADE8E708E1F2652F136 /* Build configuration list for PBXNativeTarget "SubZeroTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52A52C78D7FEE1A5A943D6EA /* Debug */,
+				8BAB160D080504C1623A0A5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1698A6FA34890067E81BA3B5 /* Build configuration list for PBXNativeTarget "SubZeroHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C859ADFE4326A541427BD6E2 /* Debug */,
+				872BEDECCF30AC233FA1107C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D39F394A1D3A1304C182270B /* Build configuration list for PBXNativeTarget "SubZero" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7E8329694FB45369C942BE7 /* Debug */,
+				28E52315B60C98404ECA7155 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9B45444249A9E744D7CBFDDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		42CE9F853274986DD869925E /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B45444249A9E744D7CBFDDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		5FCC21C15D455D0E5FF0F9A3 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B45444249A9E744D7CBFDDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		65A4E92344FCCF15E1022C67 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B45444249A9E744D7CBFDDE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C295DC6A28DDD12C2A5801E2 /* Project object */;
+}

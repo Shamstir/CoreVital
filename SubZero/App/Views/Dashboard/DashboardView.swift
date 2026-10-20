@@ -63,7 +63,7 @@ struct DashboardView: View {
             
             // Demo Alert Phone Button
             Button(action: {
-                FirebaseManager.shared.triggerRemoteDemoAlert()
+                PairingManager.shared.triggerTestAlert()
             }) {
                 HStack(spacing: 6) {
                     Image(systemName: "flame.fill")

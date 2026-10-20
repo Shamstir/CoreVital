@@ -24,5 +24,7 @@
 	<true/>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUBZERO_PAIRING_WORKER_URL</key>
+	<string>https://subzero-fcm.bahubali1267354.workers.dev</string>
 </dict>
 </plist>

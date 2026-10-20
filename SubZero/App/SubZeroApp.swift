@@ -21,6 +21,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        // Firestore telemetry only; Firebase Auth is intentionally never started
+        // because local macOS signing cannot access its Keychain credentials.
         FirebaseManager.shared.configure()
         _ = SensorManager.shared
         

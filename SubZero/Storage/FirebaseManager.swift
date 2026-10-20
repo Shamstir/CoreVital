@@ -17,6 +17,11 @@ public final class FirebaseManager: ObservableObject {
     @Published public var status: FirebaseConnectionStatus = .notConfigured
     @Published public var isConfigured: Bool = false
     @Published public var currentUserId: String? = nil
+    @Published public var currentUser: User? = nil
+    @Published public var currentUserEmail: String? = nil
+    @Published public var isAuthenticatedWithEmail: Bool = false
+    @Published public var isAuthLoading: Bool = false
+    @Published public var authErrorMessage: String? = nil
     @Published public var isSyncing: Bool = false
     @Published public var lastSyncTime: Date? = nil
     @Published public var statusMessage: String = "Ready"
@@ -24,9 +29,12 @@ public final class FirebaseManager: ObservableObject {
     @Published public var isAutoTelemetrySyncEnabled: Bool = true
     @Published public var thermalAlertThreshold: Double = 85.0
     @Published public var lastPublishedTimestamp: Date? = nil
+    @Published public private(set) var externalFanCommand: String = "off"
 
     private var db: Firestore?
     private var commandListener: ListenerRegistration?
+    private var externalFanCommandListener: ListenerRegistration?
+    private var lastExternalFanCommandID: String?
     public let deviceId: String = {
         // Unique hardware UUID or device host name fallback
         if let uuid = getHardwareUUID() {
@@ -60,9 +68,10 @@ public final class FirebaseManager: ObservableObject {
             self.status = .configured
             self.statusMessage = "Connected to Firebase (\(options.projectID ?? ""))."
             print("[SubZero Firebase] Initialized successfully with project: \(options.projectID ?? "")")
-            
-            // Authenticate anonymously for cloud storage
-            authenticateAnonymously()
+
+            // Do not initialize Firebase Auth on macOS. It relies on Keychain
+            // access which a locally signed build cannot use.
+            self.statusMessage = "Firestore telemetry connected."
             startListeningToRemoteCommands()
         } catch {
             self.status = .error
@@ -75,7 +84,10 @@ public final class FirebaseManager: ObservableObject {
     public func authenticateAnonymously() {
         guard isConfigured else { return }
         if let user = Auth.auth().currentUser {
+            self.currentUser = user
             self.currentUserId = user.uid
+            self.currentUserEmail = user.email
+            self.isAuthenticatedWithEmail = !user.isAnonymous
             return
         }
 
@@ -85,10 +97,75 @@ public final class FirebaseManager: ObservableObject {
                     self?.lastError = error.localizedDescription
                     print("[SubZero Firebase] Auth error: \(error)")
                 } else if let user = authResult?.user {
+                    self?.currentUser = user
                     self?.currentUserId = user.uid
+                    self?.currentUserEmail = user.email
+                    self?.isAuthenticatedWithEmail = false
                     print("[SubZero Firebase] Signed in anonymously with UID: \(user.uid)")
                 }
             }
+        }
+    }
+
+    public func signIn(email: String, password: String) async throws {
+        isAuthLoading = true
+        authErrorMessage = nil
+        defer { isAuthLoading = false }
+
+        do {
+            let result = try await Auth.auth().signIn(
+                withEmail: email.trimmingCharacters(in: .whitespacesAndNewlines),
+                password: password
+            )
+            self.currentUser = result.user
+            self.currentUserEmail = result.user.email
+            self.currentUserId = result.user.uid
+            self.isAuthenticatedWithEmail = true
+            self.statusMessage = "Signed in as \(result.user.email ?? "")"
+            print("[SubZero Firebase] Successfully signed in with email: \(result.user.email ?? "")")
+        } catch {
+            self.authErrorMessage = error.localizedDescription
+            print("[SubZero Firebase] Sign in error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+
+    public func signUp(email: String, password: String) async throws {
+        isAuthLoading = true
+        authErrorMessage = nil
+        defer { isAuthLoading = false }
+
+        do {
+            let result = try await Auth.auth().createUser(
+                withEmail: email.trimmingCharacters(in: .whitespacesAndNewlines),
+                password: password
+            )
+            self.currentUser = result.user
+            self.currentUserEmail = result.user.email
+            self.currentUserId = result.user.uid
+            self.isAuthenticatedWithEmail = true
+            self.statusMessage = "Account created as \(result.user.email ?? "")"
+            print("[SubZero Firebase] Successfully signed up: \(result.user.email ?? "")")
+        } catch {
+            self.authErrorMessage = error.localizedDescription
+            print("[SubZero Firebase] Sign up error: \(error.localizedDescription)")
+            throw error
+        }
+    }
+
+    public func signOut() throws {
+        do {
+            try Auth.auth().signOut()
+            self.currentUser = nil
+            self.currentUserEmail = nil
+            self.currentUserId = nil
+            self.isAuthenticatedWithEmail = false
+            self.statusMessage = "Signed out."
+            print("[SubZero Firebase] Signed out successfully.")
+            authenticateAnonymously()
+        } catch {
+            self.authErrorMessage = error.localizedDescription
+            throw error
         }
     }
 
@@ -151,9 +228,17 @@ public final class FirebaseManager: ObservableObject {
             "alertMessage": isOverheating ? String(format: "High Thermal Alert: %.1f°C exceeds %.0f°C limit!", maxTemp, thermalAlertThreshold) : ""
         ]
 
+        var finalPayload = payload
+        if let email = currentUserEmail?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines), !email.isEmpty {
+            finalPayload["userEmail"] = email
+        }
+        if let uid = currentUserId, !uid.isEmpty {
+            finalPayload["userId"] = uid
+        }
+
         // Update active device document in Firestore
-        print("[SubZero Firebase] 📡 Broadcasting telemetry for device '\(deviceId)' to Firestore /devices/\(deviceId)...")
-        db.collection("devices").document(deviceId).setData(payload, merge: true) { [weak self] error in
+        print("[SubZero Firebase] 📡 Broadcasting telemetry for device '\(deviceId)' (email: \(currentUserEmail ?? "anonymous")) to Firestore /devices/\(deviceId)...")
+        db.collection("devices").document(deviceId).setData(finalPayload, merge: true) { [weak self] error in
             if let error = error {
                 print("[SubZero Firebase] ❌ Firestore publish error: \(error.localizedDescription)")
             } else {
@@ -172,7 +257,7 @@ public final class FirebaseManager: ObservableObject {
             return
         }
         
-        let demoPayload: [String: Any] = [
+        var demoPayload: [String: Any] = [
             "alertTriggered": true,
             "alertMessage": "🔥 [DEMO ALERT] Critical Mac Temperature (92.5°C) Simulated!",
             "maxTemp": 92.5,
@@ -181,8 +266,12 @@ public final class FirebaseManager: ObservableObject {
             "thermalState": "Critical",
             "updatedAt": FieldValue.serverTimestamp()
         ]
+
+        if let email = currentUserEmail?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines), !email.isEmpty {
+            demoPayload["userEmail"] = email
+        }
         
-        print("[SubZero Firebase] 🚨 Triggering live thermal alert on remote Android device...")
+        print("[SubZero Firebase] 🚨 Triggering live thermal alert on remote Android device (email: \(currentUserEmail ?? "anonymous"))...")
         db.collection("devices").document(deviceId).setData(demoPayload, merge: true) { error in
             if let error = error {
                 print("[SubZero Firebase] ❌ Demo alert error: \(error.localizedDescription)")
@@ -196,6 +285,7 @@ public final class FirebaseManager: ObservableObject {
     private func startListeningToRemoteCommands() {
         guard let db = db else { return }
         commandListener?.remove()
+        externalFanCommandListener?.remove()
 
         commandListener = db.collection("devices").document(deviceId).collection("commands")
             .order(by: "timestamp", descending: true)
@@ -215,6 +305,22 @@ public final class FirebaseManager: ObservableObject {
                     }
                     // Mark command as executed
                     doc.reference.updateData(["executed": true, "executedAt": FieldValue.serverTimestamp()])
+                }
+            }
+
+        externalFanCommandListener = db.collection("devices").document(deviceId)
+            .addSnapshotListener { [weak self] snapshot, error in
+                guard let self, error == nil, let data = snapshot?.data(),
+                      let command = data["externalFanCommand"] as? String,
+                      let commandID = data["externalFanCommandID"] as? String,
+                      commandID != self.lastExternalFanCommandID else { return }
+
+                self.lastExternalFanCommandID = commandID
+                guard command == "externalFanOn" || command == "externalFanOff" else { return }
+                Task { @MainActor in
+                    self.externalFanCommand = command == "externalFanOn" ? "on" : "off"
+                    UserDefaults.standard.set(self.externalFanCommand, forKey: "externalFanCommand")
+                    print("[SubZero External Fan] Received \(command). ESP bridge can now forward this state.")
                 }
             }
     }
